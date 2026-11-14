@@ -1,0 +1,34 @@
+{
+  "checkpoint_epoch": 2,
+  "seed": 42,
+  "scores": {
+    "chexpert_internal_test": {
+      "images": 3000,
+      "per_label": {
+        "cardiomegaly": 0.9355954408489453,
+        "pleural_effusion": 0.9507855444956174,
+        "pneumothorax": 0.7856902356902357
+      },
+      "macro_auroc": 0.8906904070115994
+    },
+    "chexpert_official_validation": {
+      "images": 202,
+      "per_label": {
+        "cardiomegaly": 0.8795677361853832,
+        "pleural_effusion": 0.8675271739130435,
+        "pneumothorax": 0.7142857142857143
+      },
+      "macro_auroc": 0.820460208128047
+    },
+    "nih_test": {
+      "images": 5000,
+      "per_label": {
+        "cardiomegaly": 0.7427337812114494,
+        "pleural_effusion": 0.7474637521403323,
+        "pneumothorax": 0.7329176454617844
+      },
+      "macro_auroc": 0.7410383929378553
+    }
+  },
+  "source_to_nih_macro_auroc_drop": 0.14965201407374407
+}

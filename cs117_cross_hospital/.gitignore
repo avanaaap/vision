@@ -1,0 +1,20 @@
+# Local datasets and copies of the split manifests
+data/
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.dcm
+
+# Generated training and evaluation artifacts
+checkpoints/
+results/
+*.pt
+*.pth
+*.log
+
+# Local Python environment
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
