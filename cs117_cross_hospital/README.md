@@ -21,9 +21,9 @@ The 3,000-image CheXpert internal test split comes from the CheXpert **training 
 
 CheXpert uncertain (`-1`) or missing labels are ignored for the affected finding. The loader returns a mask; training uses masked binary cross-entropy, and AUROC excludes masked labels. NIH labels are 0 or 1. The source and target datasets have different labeling processes, which is a limitation of cross-dataset comparisons.
 
-## Data for teammates
+## Data 
 
-Clone this fork, then download the seven dataset ZIPs from the team's Google Drive to your computer. The commands below assume they are in your Downloads folder; change the paths if you saved them elsewhere.
+Clone this fork, then download the seven dataset ZIPs from the Google Drive to your computer. The commands below assume they are in your Downloads folder; change the paths if you saved them elsewhere.
 
 ## Install
 
