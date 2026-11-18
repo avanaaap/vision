@@ -1,0 +1,75 @@
+{
+  "checkpoint": "/content/vision/cs117_cross_hospital/checkpoints/augmentation/mild/seed_42/best.pt",
+  "checkpoint_epoch": 3,
+  "seed": 42,
+  "augmentation": {
+    "level": "mild",
+    "geometry": {
+      "degrees": 5,
+      "translate": [
+        0.02,
+        0.02
+      ]
+    },
+    "image_size": 224,
+    "description": "baseline + mild brightness/contrast, noise, blur",
+    "brightness": 0.1,
+    "contrast": 0.1,
+    "p_color": 0.8,
+    "blur_kernel": 3,
+    "blur_sigma": [
+      0.1,
+      0.5
+    ],
+    "p_blur": 0.3,
+    "noise_std": 0.01,
+    "p_noise": 0.5
+  },
+  "scores": {
+    "chexpert_internal_test": {
+      "images": 3000,
+      "per_label": {
+        "cardiomegaly": 0.9383073496659242,
+        "pleural_effusion": 0.9604832120041599,
+        "pneumothorax": 0.7800224466891134
+      },
+      "macro_auroc": 0.8929376694530659
+    },
+    "chexpert_official_validation": {
+      "images": 202,
+      "per_label": {
+        "cardiomegaly": 0.8345588235294117,
+        "pleural_effusion": 0.896286231884058,
+        "pneumothorax": 0.6322344322344322
+      },
+      "macro_auroc": 0.7876931625493007
+    },
+    "nih_test": {
+      "images": 5000,
+      "per_label": {
+        "cardiomegaly": 0.7505090142959717,
+        "pleural_effusion": 0.7756167988922239,
+        "pneumothorax": 0.7225490390839305
+      },
+      "macro_auroc": 0.7495582840907087
+    }
+  },
+  "source_to_nih_macro_auroc_drop": 0.14337938536235717,
+  "adabn": {
+    "images": 1000,
+    "batches": 20,
+    "bn_layers": 121,
+    "scores": {
+      "nih_test": {
+        "images": 5000,
+        "per_label": {
+          "cardiomegaly": 0.7314065678502667,
+          "pleural_effusion": 0.7629034086793296,
+          "pneumothorax": 0.742138599044133
+        },
+        "macro_auroc": 0.7454828585245764
+      }
+    },
+    "source_to_nih_macro_auroc_drop": 0.14745481092848944
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "baseline/adabn_off": {
+    "level": "baseline",
+    "adabn": "off",
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "chexpert_internal_test_macro": {
+      "mean": 0.8939539492270384,
+      "std": 0.0026488033293610327,
+      "n": 3
+    },
+    "nih_test_macro": {
+      "mean": 0.7534426942014852,
+      "std": 0.013255805769422068,
+      "n": 3
+    },
+    "nih_test_per_label": {
+      "cardiomegaly": {
+        "mean": 0.7572019206533779,
+        "std": 0.015501080949302946,
+        "n": 3
+      },
+      "pleural_effusion": {
+        "mean": 0.7567985405321987,
+        "std": 0.011310334938221582,
+        "n": 3
+      },
+      "pneumothorax": {
+        "mean": 0.7463276214188791,
+        "std": 0.02053380546222943,
+        "n": 3
+      }
+    },
+    "source_to_nih_drop": {
+      "mean": 0.14051125502555317,
+      "std": 0.015335035296330842,
+      "n": 3
+    }
+  },
+  "baseline/adabn_on": {
+    "level": "baseline",
+    "adabn": "on",
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "chexpert_internal_test_macro": {
+      "mean": 0.8939539492270384,
+      "std": 0.0026488033293610327,
+      "n": 3
+    },
+    "nih_test_macro": {
+      "mean": 0.7499067360821411,
+      "std": 0.01831093941054347,
+      "n": 3
+    },
+    "nih_test_per_label": {
+      "cardiomegaly": {
+        "mean": 0.7425650931627027,
+        "std": 0.028491640071814924,
+        "n": 3
+      },
+      "pleural_effusion": {
+        "mean": 0.7495756954133461,
+        "std": 0.011678370072010592,
+        "n": 3
+      },
+      "pneumothorax": {
+        "mean": 0.7575794196703743,
+        "std": 0.01949476492830165,
+        "n": 3
+      }
+    },
+    "source_to_nih_drop": {
+      "mean": 0.1440472131448974,
+      "std": 0.01968109114718161,
+      "n": 3
+    }
+  }
+}

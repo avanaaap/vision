@@ -1,0 +1,64 @@
+{
+  "checkpoint": "/content/vision/cs117_cross_hospital/checkpoints/augmentation/baseline/seed_43/best.pt",
+  "checkpoint_epoch": 4,
+  "seed": 43,
+  "augmentation": {
+    "level": "baseline",
+    "geometry": {
+      "degrees": 5,
+      "translate": [
+        0.02,
+        0.02
+      ]
+    },
+    "image_size": 224,
+    "description": "standard small rotation/translation only (AdaBN-off reference)"
+  },
+  "scores": {
+    "chexpert_internal_test": {
+      "images": 3000,
+      "per_label": {
+        "cardiomegaly": 0.9432333289663305,
+        "pleural_effusion": 0.9604813549249739,
+        "pneumothorax": 0.7842592592592592
+      },
+      "macro_auroc": 0.8959913143835211
+    },
+    "chexpert_official_validation": {
+      "images": 202,
+      "per_label": {
+        "cardiomegaly": 0.847704991087344,
+        "pleural_effusion": 0.8894927536231885,
+        "pneumothorax": 0.7311355311355311
+      },
+      "macro_auroc": 0.8227777586153545
+    },
+    "nih_test": {
+      "images": 5000,
+      "per_label": {
+        "cardiomegaly": 0.7632264289844495,
+        "pleural_effusion": 0.7452012463531676,
+        "pneumothorax": 0.7518470877844715
+      },
+      "macro_auroc": 0.7534249210406961
+    }
+  },
+  "source_to_nih_macro_auroc_drop": 0.14256639334282495,
+  "adabn": {
+    "images": 1000,
+    "batches": 20,
+    "bn_layers": 121,
+    "scores": {
+      "nih_test": {
+        "images": 5000,
+        "per_label": {
+          "cardiomegaly": 0.7593798876038339,
+          "pleural_effusion": 0.743274159903164,
+          "pneumothorax": 0.7693499310497816
+        },
+        "macro_auroc": 0.7573346595189264
+      }
+    },
+    "source_to_nih_macro_auroc_drop": 0.13865665486459466
+  }
+}
