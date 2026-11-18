@@ -1,4 +1,4 @@
-"""Train the CheXpert-only DenseNet-121 baseline."""
+"""Train the CheXpert-only DenseNet-121 at a chosen augmentation strength."""
 
 import argparse
 import json
@@ -10,22 +10,10 @@ import torch
 from sklearn.metrics import roc_auc_score
 from torch import nn
 from torch.utils.data import DataLoader
-from torchvision import transforms
 from torchvision.models import DenseNet121_Weights, densenet121
 
+from augmentations import LEVELS, describe, make_transform
 from dataset_loader import ChestXrayDataset, LABELS
-
-MEAN = (0.485, 0.456, 0.406)
-STD = (0.229, 0.224, 0.225)
-
-
-def make_transform(training=False):
-    steps = [transforms.Resize((224, 224))]
-    if training:
-        steps.append(transforms.RandomAffine(degrees=5, translate=(0.02, 0.02)))
-    steps.extend([transforms.ToTensor(), transforms.Normalize(MEAN, STD)])
-    return transforms.Compose(steps)
-
 
 def make_model(pretrained=True):
     weights = DenseNet121_Weights.IMAGENET1K_V1 if pretrained else None
@@ -69,26 +57,31 @@ def main():
     parser.add_argument("--learning-rate", type=float, default=1e-4)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--workers", type=int, default=0)
+    parser.add_argument("--aug-level", choices=sorted(LEVELS), default="baseline", help="Training augmentation strength")
+    parser.add_argument("--no-pretrained", action="store_true", help="Random init (smoke tests only)")
+    parser.add_argument("--device", default="auto", help="auto (cuda > mps > cpu), or e.g. cpu, cuda:0")
     args = parser.parse_args()
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
-    if torch.cuda.is_available():
+    if args.device != "auto":
+        device = torch.device(args.device)
+    elif torch.cuda.is_available():
         device = torch.device("cuda")
     elif torch.backends.mps.is_available():
         device = torch.device("mps")
     else:
         device = torch.device("cpu")
-    train_data = ChestXrayDataset(args.data_dir / "chexpert_train.csv", args.chexpert_zip, "zip", make_transform(True))
+    train_data = ChestXrayDataset(args.data_dir / "chexpert_train.csv", args.chexpert_zip, "zip", make_transform(True, args.aug_level))
     val_data = ChestXrayDataset(args.data_dir / "chexpert_validation.csv", args.chexpert_zip, "zip", make_transform())
     train_loader = DataLoader(train_data, batch_size=args.batch_size, shuffle=True, num_workers=args.workers)
     val_loader = DataLoader(val_data, batch_size=args.batch_size, shuffle=False, num_workers=args.workers)
-    model = make_model().to(device)
+    model = make_model(pretrained=not args.no_pretrained).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate)
     criterion = nn.BCEWithLogitsLoss(reduction="none")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     best = float("-inf")
-    print(f"device={device}; train={len(train_data)}; validation={len(val_data)}; labels={LABELS}", flush=True)
+    print(f"device={device}; aug_level={args.aug_level}; seed={args.seed}; train={len(train_data)}; validation={len(val_data)}; labels={LABELS}", flush=True)
     for epoch in range(1, args.epochs + 1):
         model.train()
         total_loss, batches = 0.0, 0
@@ -108,7 +101,8 @@ def main():
             "seed": args.seed,
             "validation": validation,
             "labels": list(LABELS),
-            "augmentation": "resize224_random_affine_5deg_translate_0.02",
+            "augmentation": describe(args.aug_level),
+            "training_budget": {"epochs": args.epochs, "batch_size": args.batch_size, "learning_rate": args.learning_rate},
         }
         torch.save(checkpoint, args.output_dir / f"epoch_{epoch}.pt")
         value = validation["macro_auroc"]
